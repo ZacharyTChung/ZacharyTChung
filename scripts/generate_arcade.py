@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Generate ZACHARY-KONG arcade SVG from real GitHub contribution data.
+"""Generate GIT INVADERS arcade SVG from real GitHub contribution data.
 
-Fetches the user's contribution calendar via the GitHub GraphQL API and bakes
-the data into a Donkey Kong themed animated SVG. Each week becomes a column of
-colored girder bricks (intensity = commit count). HUD shows live stats.
+Each cell in the user's contribution graph (53 weeks x 7 days) becomes an
+alien sprite, color-graded by commit count. A player ship at the bottom
+fires lasers; explosions pop at real commit cells. Regenerated daily so the
+formation reshapes itself as new commits land.
 """
 from __future__ import annotations
 
 import json
 import os
+import random
+import re
 import sys
 import urllib.request
 from datetime import date, datetime
@@ -17,7 +20,7 @@ from pathlib import Path
 USERNAME = os.environ.get("USERNAME", "ZacharyTChung")
 TOKEN = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN", "")
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "assets" / "dk-arcade.svg"
+OUT = ROOT / "assets" / "git-invaders.svg"
 
 QUERY = """
 query($u: String!) {
@@ -37,25 +40,91 @@ query($u: String!) {
 }
 """
 
+# Sprite cell layout: each alien occupies CELL x CELL pixels; the 8x6 sprite
+# is drawn in the top-left of each cell.
+GRID_X0 = 64
+GRID_Y0 = 110
+CELL = 14
+SPRITE_W = 8
+SPRITE_H = 6
 
-def fetch():
+
+def fetch_graphql():
     if not TOKEN:
-        print("warn: no token, using empty calendar", file=sys.stderr)
-        return {"totalContributions": 0, "weeks": []}
+        return None
     req = urllib.request.Request(
         "https://api.github.com/graphql",
         data=json.dumps({"query": QUERY, "variables": {"u": USERNAME}}).encode(),
         headers={
             "Authorization": f"Bearer {TOKEN}",
             "Content-Type": "application/json",
-            "User-Agent": "zachary-kong-generator",
+            "User-Agent": "git-invaders-generator",
         },
     )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        data = json.loads(r.read())
-    if "errors" in data:
-        raise RuntimeError(data["errors"])
-    return data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.loads(r.read())
+        if "errors" in data:
+            print(f"warn: graphql errors: {data['errors']}", file=sys.stderr)
+            return None
+        return data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+    except Exception as e:
+        print(f"warn: graphql fetch failed: {e}", file=sys.stderr)
+        return None
+
+
+def fetch_public():
+    """Scrape the public contribution page when no token is available."""
+    url = f"https://github.com/users/{USERNAME}/contributions"
+    req = urllib.request.Request(
+        url, headers={"User-Agent": "Mozilla/5.0 git-invaders"}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            html = r.read().decode()
+    except Exception as e:
+        print(f"warn: public fetch failed: {e}", file=sys.stderr)
+        return {"totalContributions": 0, "weeks": []}
+
+    # Extract per-day attributes from the modern table-based layout.
+    cells = re.findall(
+        r'<td[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d+)"',
+        html,
+    )
+    if not cells:
+        cells = re.findall(
+            r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d+)"', html
+        )
+
+    # Approximate count from level bucket (no exact counts on public page).
+    level_to_count = {0: 0, 1: 2, 2: 5, 3: 8, 4: 12}
+    by_date = {d: level_to_count.get(int(lvl), int(lvl)) for d, lvl in cells}
+    if not by_date:
+        return {"totalContributions": 0, "weeks": []}
+
+    sorted_dates = sorted(by_date.keys())
+    weeks = []
+    cur = []
+    last_gh_dow = None
+    for d in sorted_dates:
+        gh_dow = (datetime.fromisoformat(d).weekday() + 1) % 7  # Sunday = 0
+        if last_gh_dow is not None and gh_dow <= last_gh_dow:
+            weeks.append({"contributionDays": cur})
+            cur = []
+        cur.append({"contributionCount": by_date[d], "date": d})
+        last_gh_dow = gh_dow
+    if cur:
+        weeks.append({"contributionDays": cur})
+
+    return {"totalContributions": sum(by_date.values()), "weeks": weeks}
+
+
+def fetch():
+    cal = fetch_graphql()
+    if cal is None:
+        print("info: falling back to public contribution scrape", file=sys.stderr)
+        cal = fetch_public()
+    return cal
 
 
 def stats(cal):
@@ -66,14 +135,16 @@ def stats(cal):
 
     busiest = max((d["contributionCount"] for d in days), default=0)
 
-    longest = current = run = 0
-    today = date.today().isoformat()
+    longest = run = 0
     for d in days:
         if d["contributionCount"] > 0:
             run += 1
             longest = max(longest, run)
         else:
             run = 0
+
+    today = date.today().isoformat()
+    current = 0
     for d in reversed(days):
         if d["date"] > today:
             continue
@@ -87,38 +158,85 @@ def stats(cal):
         "busiest": busiest,
         "longest": longest,
         "current": current,
+        "active_days": sum(1 for d in days if d["contributionCount"] > 0),
     }
 
 
-# DK-themed gradient: dark -> ember -> ember -> bright orange -> gold
-def brick_color(c: int) -> str:
-    if c <= 0:
-        return "#1c1c1c"
+def alien_color(c: int) -> str:
     if c < 3:
-        return "#7a2b00"
+        return "#0e8e3a"
     if c < 6:
-        return "#cc4b1f"
+        return "#39d353"
     if c < 10:
-        return "#ff8c2a"
-    return "#ffcc33"
+        return "#ffcc33"
+    return "#ff6644"
 
 
-def grid_svg(weeks, x0=70, y0=395, cell=12, gap=2):
-    out = []
+def build_formation(weeks):
+    """Render every active commit day as a <use> of #alien."""
+    items = []
     for wi, w in enumerate(weeks):
         for di, day in enumerate(w.get("contributionDays", [])):
-            x = x0 + wi * (cell + gap)
-            y = y0 + di * (cell + gap)
             c = day["contributionCount"]
-            fill = brick_color(c)
-            # Brick highlight (top edge) for 3D effect
-            out.append(
-                f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" fill="{fill}"/>'
-            )
-            if c > 0:
-                out.append(
-                    f'<rect x="{x}" y="{y}" width="{cell}" height="2" fill="rgba(255,255,255,0.18)"/>'
-                )
+            if c <= 0:
+                continue
+            x = GRID_X0 + wi * CELL
+            y = GRID_Y0 + di * CELL
+            items.append(f'<use href="#alien" x="{x}" y="{y}" fill="{alien_color(c)}"/>')
+    return "\n  ".join(items)
+
+
+def build_stars(seed: int = 42, n: int = 70):
+    rnd = random.Random(seed)
+    out = []
+    for _ in range(n):
+        x = rnd.randint(8, 860)
+        y = rnd.randint(8, 530)
+        s = rnd.choice([1, 1, 1, 1, 2])
+        delay = round(rnd.uniform(0, 4), 2)
+        dur = round(rnd.uniform(2.2, 4.5), 2)
+        out.append(
+            f'<rect x="{x}" y="{y}" width="{s}" height="{s}" fill="#fff">'
+            f'<animate attributeName="opacity" values="0.15;0.85;0.15" '
+            f'dur="{dur}s" begin="{delay}s" repeatCount="indefinite"/></rect>'
+        )
+    return "\n  ".join(out)
+
+
+def build_explosions(weeks, seed: int = 7, n: int = 8, cycle: float = 9.0):
+    """Pop explosions at real commit cells, staggered across the loop."""
+    active = [
+        (wi, di, d["contributionCount"])
+        for wi, w in enumerate(weeks)
+        for di, d in enumerate(w.get("contributionDays", []))
+        if d["contributionCount"] > 0
+    ]
+    if not active:
+        return ""
+    # Bias toward busier cells
+    active.sort(key=lambda t: -t[2])
+    pool = active[: max(20, len(active) // 4)]
+    rnd = random.Random(seed)
+    rnd.shuffle(pool)
+    picks = pool[:n]
+    out = []
+    step = cycle / max(n, 1)
+    for i, (wi, di, _c) in enumerate(picks):
+        x = GRID_X0 + wi * CELL
+        y = GRID_Y0 + di * CELL
+        begin = round(i * step, 2)
+        out.append(
+            f'<g transform="translate({x},{y})" opacity="0">'
+            f'<animate attributeName="opacity" values="0;1;1;0;0" '
+            f'keyTimes="0;0.04;0.10;0.18;1" dur="{cycle}s" '
+            f'begin="{begin}s" repeatCount="indefinite"/>'
+            f'<rect x="0" y="-1" width="{SPRITE_W}" height="{SPRITE_H + 2}" fill="#ffee00"/>'
+            f'<rect x="-2" y="1" width="2" height="2" fill="#ff6644"/>'
+            f'<rect x="{SPRITE_W}" y="1" width="2" height="2" fill="#ff6644"/>'
+            f'<rect x="2" y="-3" width="2" height="2" fill="#ff6644"/>'
+            f'<rect x="2" y="{SPRITE_H + 1}" width="2" height="2" fill="#ff6644"/>'
+            f"</g>"
+        )
     return "\n  ".join(out)
 
 
@@ -129,7 +247,9 @@ def fmt6(n: int) -> str:
 def build(cal) -> str:
     s = stats(cal)
     weeks = cal.get("weeks", [])
-    grid = grid_svg(weeks)
+    formation = build_formation(weeks)
+    stars = build_stars()
+    explosions = build_explosions(weeks)
 
     today = date.today().strftime("%Y.%m.%d")
     score = fmt6(s["total"])
@@ -137,212 +257,118 @@ def build(cal) -> str:
     streak = fmt6(s["current"])
     longest = fmt6(s["longest"])
 
-    # 53 weeks * 14px = 742, +70 left = grid spans 70..812 — viewBox 800 wide (slight clip OK)
-    # Pad to 870 wide so full grid fits.
     return f"""<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 540" width="100%" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" role="img" aria-label="ZACHARY-KONG arcade view of contribution graph">
-  <title>ZACHARY-KONG · {s['total']} contributions · {s['current']}-day streak</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 540" width="100%" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" role="img" aria-label="GIT INVADERS - contribution graph as alien formation">
+  <title>GIT INVADERS · {s['total']} contributions · {s['active_days']} aliens · {s['current']}-day streak</title>
+  <defs>
+    <!-- 8x6 squid-style invader sprite. Fill comes from the <use>. -->
+    <g id="alien">
+      <rect x="1" y="0" width="2" height="1"/>
+      <rect x="5" y="0" width="2" height="1"/>
+      <rect x="0" y="1" width="8" height="1"/>
+      <rect x="0" y="2" width="1" height="1"/>
+      <rect x="2" y="2" width="1" height="1"/>
+      <rect x="5" y="2" width="1" height="1"/>
+      <rect x="7" y="2" width="1" height="1"/>
+      <rect x="0" y="3" width="8" height="1"/>
+      <rect x="1" y="4" width="1" height="1"/>
+      <rect x="6" y="4" width="1" height="1"/>
+      <rect x="0" y="5" width="1" height="1"/>
+      <rect x="7" y="5" width="1" height="1"/>
+    </g>
+    <!-- Player ship -->
+    <g id="ship">
+      <rect x="6"  y="0" width="2"  height="2" fill="#39d353"/>
+      <rect x="5"  y="2" width="4"  height="2" fill="#39d353"/>
+      <rect x="2"  y="4" width="10" height="2" fill="#39d353"/>
+      <rect x="0"  y="6" width="14" height="3" fill="#39d353"/>
+      <rect x="1"  y="9" width="3"  height="1" fill="#39d353"/>
+      <rect x="10" y="9" width="3"  height="1" fill="#39d353"/>
+      <rect x="6"  y="3" width="2"  height="1" fill="#fff"/>
+    </g>
+  </defs>
+
   <style>
     text {{ font-family: 'Courier New', ui-monospace, monospace; font-weight: 700; }}
     @keyframes blink   {{ 0%,49% {{ opacity: 1 }} 50%,100% {{ opacity: 0.15 }} }}
     @keyframes coin    {{ 0%,49% {{ opacity: 1 }} 50%,100% {{ opacity: 0 }} }}
-    @keyframes dkbob   {{ 0%,100% {{ transform: translate(80px,30px) }} 50% {{ transform: translate(80px,25px) }} }}
-    @keyframes mariojump {{ 0%,70% {{ transform: translate(420px,360px) }} 78% {{ transform: translate(420px,336px) }} 85% {{ transform: translate(420px,360px) }} }}
-    @keyframes heartbeat {{ 0%,100% {{ transform: translate(720px,30px) scale(1) }} 50% {{ transform: translate(718px,28px) scale(1.25) }} }}
-    @keyframes flame   {{ 0%,100% {{ transform: translate(56px,387px) scaleY(1) }} 50% {{ transform: translate(56px,385px) scaleY(1.3) }} }}
-    @keyframes scan    {{ 0% {{ transform: translateY(-100%) }} 100% {{ transform: translateY(540px) }} }}
+    @keyframes march   {{ 0%,100% {{ transform: translateX(-3px) }} 50% {{ transform: translateX(3px) }} }}
+    @keyframes slide   {{ 0% {{ transform: translate(70px, 470px) }} 25% {{ transform: translate(620px, 470px) }} 50% {{ transform: translate(330px, 470px) }} 75% {{ transform: translate(770px, 470px) }} 100% {{ transform: translate(70px, 470px) }} }}
+    @keyframes laser   {{ 0%,9% {{ opacity: 0; transform: translateY(0) }} 10% {{ opacity: 1; transform: translateY(0) }} 35% {{ opacity: 1; transform: translateY(-340px) }} 36%,100% {{ opacity: 0; transform: translateY(-340px) }} }}
+    @keyframes scan    {{ 0% {{ transform: translateY(-30px) }} 100% {{ transform: translateY(540px) }} }}
     .blink {{ animation: blink 0.7s step-end infinite; }}
     .coin  {{ animation: coin 1.1s step-end infinite; }}
-    .dk    {{ animation: dkbob 1.6s ease-in-out infinite; }}
-    .mario {{ animation: mariojump 3s ease-out infinite; }}
-    .heart {{ animation: heartbeat 0.9s ease-in-out infinite; }}
-    .flame {{ animation: flame 0.4s ease-in-out infinite; }}
+    .march {{ animation: march 1.6s ease-in-out infinite; }}
+    .ship  {{ animation: slide 14s ease-in-out infinite; }}
+    .laser {{ animation: laser 2.2s linear infinite; }}
     .scan  {{ animation: scan 5s linear infinite; }}
   </style>
 
-  <!-- CRT bezel + screen -->
+  <!-- CRT bezel -->
   <rect width="870" height="540" fill="#000"/>
   <rect x="6" y="6" width="858" height="528" fill="#000" stroke="#222" stroke-width="2"/>
 
-  <!-- Scanlines -->
-  <g opacity="0.05" fill="#fff">
-    <rect x="0" y="0" width="870" height="1"/><rect x="0" y="6" width="870" height="1"/>
-    <rect x="0" y="12" width="870" height="1"/><rect x="0" y="18" width="870" height="1"/>
-    <rect x="0" y="24" width="870" height="1"/><rect x="0" y="30" width="870" height="1"/>
-    <rect x="0" y="36" width="870" height="1"/><rect x="0" y="42" width="870" height="1"/>
-    <rect x="0" y="48" width="870" height="1"/><rect x="0" y="54" width="870" height="1"/>
+  <!-- Starfield -->
+  <g>
+  {stars}
   </g>
 
-  <!-- HUD (live data) -->
-  <text x="40"  y="34" font-size="14" fill="#33ccff">1UP</text>
+  <!-- HUD -->
+  <text x="40"  y="34" font-size="14" fill="#33ccff">SCORE</text>
   <text x="40"  y="54" font-size="14" fill="#fff" class="blink">{score}</text>
 
-  <text x="200" y="34" font-size="14" fill="#ff3333">HIGH SCORE</text>
-  <text x="225" y="54" font-size="14" fill="#fff">{hi}</text>
+  <text x="200" y="34" font-size="14" fill="#ff3333">HI-SCORE</text>
+  <text x="210" y="54" font-size="14" fill="#fff">{hi}</text>
 
-  <text x="400" y="34" font-size="14" fill="#ffcc00">STREAK</text>
-  <text x="395" y="54" font-size="14" fill="#fff">{streak}</text>
+  <text x="380" y="34" font-size="14" fill="#ffcc00">STREAK</text>
+  <text x="380" y="54" font-size="14" fill="#fff">{streak}</text>
 
-  <text x="560" y="34" font-size="14" fill="#39d353">LONGEST</text>
-  <text x="570" y="54" font-size="14" fill="#fff">{longest}</text>
+  <text x="540" y="34" font-size="14" fill="#39d353">LONGEST</text>
+  <text x="555" y="54" font-size="14" fill="#fff">{longest}</text>
 
-  <text x="740" y="34" font-size="14" fill="#ff66cc">DATE</text>
-  <text x="720" y="54" font-size="14" fill="#fff">{today}</text>
+  <text x="720" y="34" font-size="14" fill="#ff66cc">DATE</text>
+  <text x="700" y="54" font-size="14" fill="#fff">{today}</text>
 
-  <!-- Red girders (top half: arcade scene) -->
-  <g fill="#e84545">
-    <rect x="60" y="92"  width="750" height="8"/>
-    <polygon points="60,168 810,178 810,186 60,176"/>
-    <polygon points="60,258 810,250 810,258 60,266"/>
-    <polygon points="60,338 810,346 810,354 60,346"/>
-    <rect x="60"  y="100" width="6" height="246"/>
-    <rect x="804" y="100" width="6" height="246"/>
+  <text x="435" y="86" text-anchor="middle" font-size="22" fill="#fff" letter-spacing="6">GIT INVADERS</text>
+
+  <!-- Invader formation (the contribution graph) -->
+  <g class="march">
+    {formation}
+    <!-- explosions sit on top of the formation -->
+    {explosions}
   </g>
 
-  <!-- Yellow ladders -->
-  <g fill="#ffcc00">
-    <rect x="700" y="100" width="3" height="78"/><rect x="720" y="100" width="3" height="78"/>
-    <rect x="700" y="110" width="23" height="2"/><rect x="700" y="125" width="23" height="2"/>
-    <rect x="700" y="140" width="23" height="2"/><rect x="700" y="155" width="23" height="2"/>
-    <rect x="700" y="170" width="23" height="2"/>
-
-    <rect x="120" y="176" width="3" height="82"/><rect x="140" y="176" width="3" height="82"/>
-    <rect x="120" y="186" width="23" height="2"/><rect x="120" y="201" width="23" height="2"/>
-    <rect x="120" y="216" width="23" height="2"/><rect x="120" y="231" width="23" height="2"/>
-    <rect x="120" y="246" width="23" height="2"/>
-
-    <rect x="700" y="254" width="3" height="86"/><rect x="720" y="254" width="3" height="86"/>
-    <rect x="700" y="264" width="23" height="2"/><rect x="700" y="279" width="23" height="2"/>
-    <rect x="700" y="294" width="23" height="2"/><rect x="700" y="309" width="23" height="2"/>
-    <rect x="700" y="324" width="23" height="2"/>
-  </g>
-
-  <!-- Oil drum + flame -->
-  <rect x="48" y="360" width="36" height="22" fill="#3a8de8"/>
-  <rect x="48" y="360" width="36" height="2"  fill="#0044aa"/>
-  <rect x="48" y="372" width="36" height="2"  fill="#0044aa"/>
-  <rect x="48" y="358" width="36" height="2"  fill="#000"/>
-  <text x="60" y="376" font-size="9" fill="#fff">OIL</text>
-  <g class="flame">
-    <polygon points="0,0 8,-12 16,0 12,-6 20,-14 24,0" fill="#ff9900"/>
-    <polygon points="4,0 10,-8 14,-2 18,-10 22,0"      fill="#ffee00"/>
-  </g>
-
-  <!-- Donkey Kong -->
-  <g class="dk">
-    <rect x="0"  y="28" width="78" height="30" fill="#a0522d"/>
-    <rect x="6"  y="22" width="66" height="40" fill="#a0522d"/>
-    <rect x="22" y="34" width="34" height="22" fill="#deb887"/>
-    <rect x="14" y="0"  width="50" height="26" fill="#a0522d"/>
-    <rect x="20" y="6"  width="38" height="14" fill="#deb887"/>
-    <rect x="10" y="6"  width="6"  height="8"  fill="#a0522d"/>
-    <rect x="62" y="6"  width="6"  height="8"  fill="#a0522d"/>
-    <rect x="24" y="9"  width="6"  height="6"  fill="#fff"/>
-    <rect x="44" y="9"  width="6"  height="6"  fill="#fff"/>
-    <rect x="26" y="11" width="3"  height="3"  fill="#000"/>
-    <rect x="46" y="11" width="3"  height="3"  fill="#000"/>
-    <rect x="32" y="16" width="14" height="2"  fill="#000"/>
-    <rect x="28" y="20" width="22" height="2"  fill="#000"/>
-    <rect x="-12" y="16" width="14" height="14" fill="#a0522d"/>
-    <rect x="-18" y="6"  width="12" height="14" fill="#a0522d"/>
-    <rect x="76"  y="16" width="14" height="14" fill="#a0522d"/>
-    <rect x="82"  y="6"  width="12" height="14" fill="#a0522d"/>
-    <rect x="14" y="58" width="20" height="14" fill="#a0522d"/>
-    <rect x="44" y="58" width="20" height="14" fill="#a0522d"/>
-  </g>
-
-  <!-- Pauline -->
-  <g transform="translate(740, 50)">
-    <rect x="6"  y="0"  width="20" height="10" fill="#ffcc00"/>
-    <rect x="3"  y="3"  width="3"  height="14" fill="#ffcc00"/>
-    <rect x="26" y="3"  width="3"  height="14" fill="#ffcc00"/>
-    <rect x="8"  y="8"  width="16" height="12" fill="#ffd9b3"/>
-    <rect x="11" y="12" width="2"  height="2"  fill="#000"/>
-    <rect x="19" y="12" width="2"  height="2"  fill="#000"/>
-    <rect x="13" y="16" width="6"  height="1"  fill="#cc0044"/>
-    <rect x="3"  y="20" width="26" height="22" fill="#e83a8a"/>
-    <rect x="0"  y="24" width="32" height="14" fill="#e83a8a"/>
-    <rect x="9"  y="42" width="4"  height="6"  fill="#ffd9b3"/>
-    <rect x="19" y="42" width="4"  height="6"  fill="#ffd9b3"/>
-    <rect x="7"  y="48" width="6"  height="2"  fill="#000"/>
-    <rect x="19" y="48" width="6"  height="2"  fill="#000"/>
-  </g>
-  <text x="700" y="46" font-size="11" fill="#fff">HELP!</text>
-
-  <!-- Heart (animated) -->
-  <g class="heart">
-    <rect x="0" y="2" width="3" height="6" fill="#ff3366"/>
-    <rect x="3" y="0" width="3" height="3" fill="#ff3366"/>
-    <rect x="6" y="2" width="3" height="6" fill="#ff3366"/>
-    <rect x="3" y="3" width="3" height="5" fill="#ff3366"/>
-    <rect x="2" y="8" width="5" height="2" fill="#ff3366"/>
-    <rect x="3" y="10" width="3" height="2" fill="#ff3366"/>
-  </g>
-
-  <!-- Mario (animated) -->
-  <g class="mario">
-    <rect x="0" y="0"  width="16" height="3" fill="#cc0000"/>
-    <rect x="2" y="3"  width="14" height="3" fill="#cc0000"/>
-    <rect x="6" y="2"  width="4"  height="2" fill="#fff"/>
-    <rect x="2" y="6"  width="14" height="9" fill="#ffd9b3"/>
-    <rect x="0" y="9"  width="2"  height="3" fill="#ffd9b3"/>
-    <rect x="0" y="6"  width="2"  height="3" fill="#663300"/>
-    <rect x="11" y="9" width="2"  height="3" fill="#000"/>
-    <rect x="4" y="12" width="10" height="2" fill="#000"/>
-    <rect x="0" y="15" width="16" height="9" fill="#0044cc"/>
-    <rect x="0" y="15" width="3"  height="6" fill="#cc0000"/>
-    <rect x="13" y="15" width="3" height="6" fill="#cc0000"/>
-    <rect x="3" y="17" width="2"  height="2" fill="#ffcc00"/>
-    <rect x="11" y="17" width="2" height="2" fill="#ffcc00"/>
-    <rect x="-2" y="18" width="3" height="3" fill="#ffd9b3"/>
-    <rect x="15" y="18" width="3" height="3" fill="#ffd9b3"/>
-    <rect x="2" y="24" width="4"  height="5" fill="#0044cc"/>
-    <rect x="10" y="24" width="4" height="5" fill="#0044cc"/>
-    <rect x="0" y="28" width="6"  height="3" fill="#663300"/>
-    <rect x="10" y="28" width="6" height="3" fill="#663300"/>
-  </g>
-
-  <!-- Animated barrel rolling across platforms -->
-  <g>
-    <animateTransform attributeName="transform" type="translate"
-      values="120,82; 720,90; 720,168; 120,175; 120,250; 720,256; 720,332; 380,338; 380,360"
-      keyTimes="0; 0.16; 0.22; 0.40; 0.46; 0.62; 0.68; 0.84; 1"
-      dur="11s" repeatCount="indefinite" additive="replace"/>
-    <animateTransform attributeName="transform" type="rotate"
-      from="0" to="360" dur="0.5s" repeatCount="indefinite" additive="sum"/>
-    <g transform="translate(-11,-7)">
-      <rect x="0"  y="0"  width="22" height="14" fill="#cc6633"/>
-      <rect x="0"  y="0"  width="22" height="2"  fill="#7a2b00"/>
-      <rect x="0"  y="12" width="22" height="2"  fill="#7a2b00"/>
-      <rect x="3"  y="0"  width="2"  height="14" fill="#000"/>
-      <rect x="11" y="0"  width="2"  height="14" fill="#000"/>
-      <rect x="17" y="0"  width="2"  height="14" fill="#000"/>
+  <!-- Ship + laser -->
+  <g class="ship">
+    <use href="#ship" x="0" y="0"/>
+    <g class="laser" transform="translate(7, -6)">
+      <rect x="-1" y="-30" width="2" height="30" fill="#ffffff"/>
+      <rect x="0"  y="-30" width="1" height="30" fill="#33ccff"/>
     </g>
   </g>
 
-  <!-- LEVEL DATA section: contribution graph as girder bricks -->
-  <text x="70" y="385" font-size="11" fill="#888" letter-spacing="2">LEVEL DATA · last 53 weeks</text>
-  <g>
-  {grid}
-  </g>
+  <!-- Defense line -->
+  <rect x="40" y="498" width="790" height="1" fill="#39d353" opacity="0.5"/>
 
-  <!-- Brick legend -->
+  <!-- Color legend -->
   <g font-size="9" fill="#888">
-    <text x="640" y="510">less</text>
-    <rect x="668" y="503" width="9" height="9" fill="#1c1c1c"/>
-    <rect x="680" y="503" width="9" height="9" fill="#7a2b00"/>
-    <rect x="692" y="503" width="9" height="9" fill="#cc4b1f"/>
-    <rect x="704" y="503" width="9" height="9" fill="#ff8c2a"/>
-    <rect x="716" y="503" width="9" height="9" fill="#ffcc33"/>
-    <text x="730" y="510">more</text>
+    <text x="40" y="525">aliens by commits:</text>
+    <use href="#alien" x="170" y="518" fill="#0e8e3a"/>
+    <text x="184" y="525">1-2</text>
+    <use href="#alien" x="220" y="518" fill="#39d353"/>
+    <text x="234" y="525">3-5</text>
+    <use href="#alien" x="270" y="518" fill="#ffcc33"/>
+    <text x="284" y="525">6-9</text>
+    <use href="#alien" x="320" y="518" fill="#ff6644"/>
+    <text x="334" y="525">10+</text>
   </g>
 
   <!-- Footer -->
-  <text x="435" y="528" text-anchor="middle" font-size="11" fill="#666">© ZACHARY-KONG  ·  </text>
-  <text x="525" y="528" font-size="11" fill="#ffcc00" class="coin">INSERT COIN</text>
+  <text x="600" y="525" font-size="11" fill="#666">DEFEND THE MAIN BRANCH  ·  </text>
+  <text x="780" y="525" font-size="11" fill="#ffcc00" class="coin">1UP</text>
 
-  <!-- Moving scanline overlay -->
-  <rect class="scan" x="0" y="0" width="870" height="3" fill="rgba(255,255,255,0.04)"/>
+  <!-- Moving CRT scanline -->
+  <rect class="scan" x="0" y="0" width="870" height="3" fill="rgba(255,255,255,0.05)"/>
 </svg>
 """
 
@@ -352,7 +378,10 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(build(cal))
     s = stats(cal)
-    print(f"wrote {OUT}: total={s['total']} streak={s['current']} longest={s['longest']}")
+    print(
+        f"wrote {OUT}: total={s['total']} active={s['active_days']} "
+        f"streak={s['current']} longest={s['longest']}"
+    )
 
 
 if __name__ == "__main__":

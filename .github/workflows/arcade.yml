@@ -1,4 +1,4 @@
-name: Update ZACHARY-KONG arcade
+name: Update GIT INVADERS arcade
 
 on:
   schedule:
@@ -32,5 +32,5 @@ jobs:
       - name: Commit if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: refresh ZACHARY-KONG arcade"
-          file_pattern: assets/dk-arcade.svg
+          commit_message: "chore: refresh GIT INVADERS arcade"
+          file_pattern: assets/git-invaders.svg

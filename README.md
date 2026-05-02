@@ -131,13 +131,13 @@ Full-stack mobile app for mapping and rating travel locations. EXIF auto-pinning
 </tr>
 </table>
 
-## ZACHARY-KONG
+## GIT INVADERS
 
-> A custom retro arcade scene — your contribution graph rendered as the level itself. The HUD pulls live numbers (total commits · streak · busiest day). Regenerated daily by a GitHub Action.
+> Every commit on your contribution graph becomes an alien — color-graded by intensity (1-2, 3-5, 6-9, 10+). A ship at the bottom slides and fires; explosions pop on real commit cells. Regenerated daily by a GitHub Action so the formation reshapes itself as new commits land.
 
 <div align="center">
 
-![ZACHARY-KONG arcade](./assets/dk-arcade.svg)
+![GIT INVADERS](./assets/git-invaders.svg)
 
 </div>
 
