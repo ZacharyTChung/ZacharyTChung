@@ -133,8 +133,6 @@ Full-stack mobile app for mapping and rating travel locations. EXIF auto-pinning
 
 ## GIT INVADERS
 
-> Every commit on your contribution graph becomes an alien — color-graded by intensity (1-2, 3-5, 6-9, 10+). A ship at the bottom slides and fires; explosions pop on real commit cells. Regenerated daily by a GitHub Action so the formation reshapes itself as new commits land.
-
 <div align="center">
 
 ![GIT INVADERS](./assets/git-invaders.svg)
