@@ -1,9 +1,9 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=200&section=header&text=Zachary%20Chung&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Software%20engineer%20%C2%B7%20Los%20Angeles%20%C2%B7%20open%20to%20relocating&descAlignY=60&descAlign=50" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=200&section=header&text=Zachary%20Chung&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=CS%20%2B%20Business%20Administration%20%40%20USC&descAlignY=60&descAlign=50" width="100%" />
 
 <a href="https://zacharychung.vercel.app">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=4F8CC9&center=true&vCenter=true&width=720&lines=Sticky+note+%E2%86%92+something+real.;Full-stack+%C2%B7+Mobile+%C2%B7+Low-level+systems;Training+for+a+70.3+in+December.;Most+days+it's+just+the+work+of+showing+up." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=4F8CC9&center=true&vCenter=true&width=600&lines=Computer+Science+%2B+Business+at+USC;AI+%2F+ML%2C+Systems%2C+Full-Stack" alt="Typing SVG" />
 </a>
 
 <p>
@@ -11,133 +11,98 @@
   <a href="https://github.com/ZacharyTChung?tab=followers">
     <img src="https://img.shields.io/github/followers/ZacharyTChung?label=Followers&style=flat&color=4F8CC9" alt="followers" />
   </a>
-  <img src="https://img.shields.io/badge/Based-Los%20Angeles-FF6B6B?style=flat" alt="LA" />
-  <img src="https://img.shields.io/badge/Race%20Day-Ironman%2070.3%20%C2%B7%20Dec%206%2C%202026-2EA043?style=flat" alt="race" />
-  <img src="https://img.shields.io/badge/Open%20to-New%20Roles-4F8CC9?style=flat" alt="hiring" />
+  <img src="https://img.shields.io/badge/Focus-AI%20%2F%20ML-FF6B6B?style=flat" alt="focus" />
+  <img src="https://img.shields.io/badge/Open%20to-Internships-2EA043?style=flat" alt="open to" />
 </p>
 
 </div>
 
 ---
 
-## Hi, I'm Zachary
-
-Software engineer in LA, happy to relocate for the right opportunity. I like taking an idea from a sticky note to something real — full-stack apps, mobile, and a bit of low-level systems work when the problem calls for it.
-
-Most of what I build started with a problem I ran into myself. When I'm not at a screen, I'm probably swimming, biking, or running — chasing a half Ironman in December. The reason I like long-distance training is the same reason I like building things: small, boring days that quietly add up to something you couldn't do a few months back.
+## About Me
 
 ```yaml
-role:        Software Engineer
-location:    Los Angeles, CA  (open to relocating)
-education:   CS + Business Administration @ USC
-focus:       [full-stack, mobile, low-level systems, AI/ML]
-chasing:     Ironman 70.3 La Quinta · 2026-12-06
-ask-me-about: shipping side projects, hiking, the next trip
+name:       Zachary Chung
+location:   Los Angeles, CA
+education:  B.S. Computer Science + Business Administration, USC
+focus:      AI / ML, Systems, Full-Stack Web
 ```
 
-## Toolkit
-
-> A working set, not a wishlist. These are the tools I've actually shipped with — and the ones I keep coming back to.
+## Tech Stack
 
 <div align="center">
 
 **Languages**
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
+![C](https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black)
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
 
-**Mobile / Frontend**
+**AI / ML**
 
-![React Native](https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![Hugging%20Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+
+**Web / Full-Stack**
+
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Mapbox GL](https://img.shields.io/badge/Mapbox%20GL-000000?style=for-the-badge&logo=mapbox&logoColor=white)
-
-**Backend / Infra**
-
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![PostGIS](https://img.shields.io/badge/PostGIS-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 
-**Systems**
+**Tools / Cloud**
 
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Apache Arrow](https://img.shields.io/badge/Apache%20Arrow-1F2A44?style=for-the-badge&logo=apache&logoColor=white)
-![AWS S3](https://img.shields.io/badge/AWS%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
-
-**AI Tools**
-
-![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)
-![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-000000?style=for-the-badge&logo=githubcopilot&logoColor=white)
-
-**Other**
-
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Vim](https://img.shields.io/badge/Vim-019733?style=for-the-badge&logo=vim&logoColor=white)
 
 </div>
 
-## Selected Work
+## Projects
 
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### Agentic Automation for iOS Accessibility
-<sub>**Apr 2026** · 3rd Place · SoCal Claude Hackathon (UCLA · USC · Caltech)</sub>
-
-Voice-driven AI iPhone agent that understands screen context, performs multi-step workflows across apps, and narrates each action in real time for blind and low-vision users.
-
-`Swift` · `SwiftUI` · `Node.js` · `Claude API` · `XCTest` · `AVFoundation`
-
-</td>
-<td width="50%" valign="top">
-
-### ProfBench
-<sub>**Apr 2026 – present** · Author</sub>
-
-Domain-specific LLM evaluation harness for procurement / source-to-pay reasoning. AfterQuery-style expert-in-the-loop authoring with Claude as autograder, plus loss analysis, leaderboard, and Hugging Face dataset export.
-
-`Python` · `Claude API` · `Streamlit` · `Hugging Face` · `LLM Eval`
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### I/O Performance Study — mmap vs io_uring
-<sub>**Dec 2025 – present** · Author</sub>
-
-17 controlled experiments across 8 research phases comparing I/O strategies for analytical workloads. Identified NVMe queue saturation as a scaling limit and produced 5 actionable engineering recommendations.
-
-`C++` · `Apache Arrow` · `Linux` · `io_uring` · `mmap`
-
-</td>
-<td width="50%" valign="top">
-
-### Wandr
-<sub>**Mar 2026 – present** · Built it</sub>
-
-Full-stack mobile app for mapping and rating travel locations. EXIF auto-pinning, GPS dwell-time detection, presigned S3 uploads, and a geospatial PostGIS schema behind a Firebase Auth-protected API.
-
-`React Native` · `TypeScript` · `Node.js` · `PostgreSQL/PostGIS` · `AWS S3` · `Firebase` · `Mapbox GL`
-
-</td>
-</tr>
-</table>
-
-## GIT INVADERS
+<!-- PROJECTS:START -->
+<!-- This block is updated automatically by scripts/update_projects.py -->
 
 <div align="center">
 
-![GIT INVADERS](./assets/git-invaders.svg)
+  <a href="https://github.com/ZacharyTChung/personal-site">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=personal-site&theme=tokyonight&hide_border=true" />
+  </a>
+  <a href="https://github.com/ZacharyTChung/alpha-edge">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=alpha-edge&theme=tokyonight&hide_border=true" />
+  </a>
+  <a href="https://github.com/ZacharyTChung/shadowbox">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=shadowbox&theme=tokyonight&hide_border=true" />
+  </a>
+  <a href="https://github.com/ZacharyTChung/profbench">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=profbench&theme=tokyonight&hide_border=true" />
+  </a>
+  <a href="https://github.com/ZacharyTChung/travel-map">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=travel-map&theme=tokyonight&hide_border=true" />
+  </a>
+  <a href="https://github.com/ZacharyTChung/AdaptiveIO_Journal">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=AdaptiveIO_Journal&theme=tokyonight&hide_border=true" />
+  </a>
 
 </div>
+<!-- PROJECTS:END -->
 
 ## GitHub Stats
 
@@ -152,30 +117,29 @@ Full-stack mobile app for mapping and rating travel locations. EXIF auto-pinning
   <img src="https://streak-stats.demolab.com?user=ZacharyTChung&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
 </a>
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=ZacharyTChung&theme=tokyo-night&hide_border=true&area=true" width="98%" />
+<a href="https://github.com/ryo-ma/github-profile-trophy">
+  <img src="https://github-profile-trophy.vercel.app/?username=ZacharyTChung&theme=tokyonight&no-frame=true&no-bg=true&row=1&column=7&margin-w=8" />
+</a>
 
 </div>
 
-## Off the Clock
-
-| | |
-|---|---|
-| ⚽ **Soccer** | Played since I was a kid. Pickup, leagues, the occasional couch match. |
-| ✈️ **Travel** | I'll go pretty much anywhere new — usually for the food and the people. |
-| 🏊 **Training** | Swim, bike, run. Most days it's just the work of showing up. |
-| 🥾 **Hiking** | Sierras, desert, anywhere with elevation. Most weekends. |
-| 🏃 **Running** | Easy miles before the city wakes up. Nothing fixes a bad day like a long run. |
-
-## What I'm Chasing
-
-> Big goals keep me honest. Right now: my first half Ironman — a 1.2-mile swim, 56-mile bike, 13.1-mile run. There's no shortcut. You just keep showing up. Same goes for most of what I build. The interesting parts are almost always in the boring middle.
+## Contribution Snake
 
 <div align="center">
 
-![Race Day](https://img.shields.io/badge/RACE%20DAY-Ironman%2070.3%20La%20Quinta-2EA043?style=for-the-badge)
-![Distance](https://img.shields.io/badge/SWIM-1.2%20mi-33ccff?style=for-the-badge)
-![Distance](https://img.shields.io/badge/BIKE-56%20mi-ffcc00?style=for-the-badge)
-![Distance](https://img.shields.io/badge/RUN-13.1%20mi-ff6b6b?style=for-the-badge)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ZacharyTChung/ZacharyTChung/output/github-contribution-grid-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ZacharyTChung/ZacharyTChung/output/github-contribution-grid-snake.svg" />
+  <img alt="GitHub contribution snake" src="https://raw.githubusercontent.com/ZacharyTChung/ZacharyTChung/output/github-contribution-grid-snake.svg" />
+</picture>
+
+</div>
+
+## Activity Graph
+
+<div align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=ZacharyTChung&theme=tokyo-night&hide_border=true&area=true" width="98%" />
 
 </div>
 
@@ -186,7 +150,7 @@ Full-stack mobile app for mapping and rating travel locations. EXIF auto-pinning
 <a href="https://zacharychung.vercel.app">
   <img src="https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white" />
 </a>
-<a href="https://www.linkedin.com/in/zacharychung">
+<a href="https://www.linkedin.com/in/zachary-chung-07012a319/">
   <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
 </a>
 <a href="mailto:zchung@usc.edu">
@@ -201,8 +165,6 @@ Full-stack mobile app for mapping and rating travel locations. EXIF auto-pinning
 <div align="center">
 
 ---
-
-<sub><i>Built between training sessions.</i></sub>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=100&section=footer" width="100%" />
 

@@ -1,0 +1,36 @@
+name: Update Projects section
+
+on:
+  schedule:
+    - cron: "23 6 * * *"   # daily at 06:23 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/update_projects.py"
+      - ".github/workflows/projects.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Refresh Projects section
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USERNAME: ZacharyTChung
+        run: python scripts/update_projects.py
+
+      - name: Commit if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh Projects section"
+          file_pattern: README.md
