@@ -108,17 +108,8 @@ focus:      AI / ML, Systems, Full-Stack Web
 
 <div align="center">
 
-<a href="https://github.com/ZacharyTChung">
-  <img height="180" src="https://github-readme-stats.vercel.app/api?username=ZacharyTChung&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true" />
-  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ZacharyTChung&layout=compact&theme=tokyonight&hide_border=true&langs_count=8" />
-</a>
-
 <a href="https://git.io/streak-stats">
   <img src="https://streak-stats.demolab.com?user=ZacharyTChung&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
-</a>
-
-<a href="https://github.com/ryo-ma/github-profile-trophy">
-  <img src="https://github-profile-trophy.vercel.app/?username=ZacharyTChung&theme=tokyonight&no-frame=true&no-bg=true&row=1&column=7&margin-w=8" />
 </a>
 
 </div>
@@ -139,7 +130,7 @@ focus:      AI / ML, Systems, Full-Stack Web
 
 <div align="center">
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=ZacharyTChung&theme=tokyo-night&hide_border=true&area=true" width="98%" />
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=ZacharyTChung&theme=tokyo-night&hide_border=true&area=true&days=30" width="98%" />
 
 </div>
 
