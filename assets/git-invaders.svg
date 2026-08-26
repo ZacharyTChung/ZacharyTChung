@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 540" width="100%" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" role="img" aria-label="GIT INVADERS - contribution graph as alien formation">
-  <title>GIT INVADERS · 1621 contributions · 135 aliens · 0-day streak</title>
+  <title>GIT INVADERS · 1633 contributions · 136 aliens · 0-day streak</title>
   <defs>
     <!-- 8x6 squid-style invader sprite. Fill comes from the <use>. -->
     <g id="alien">
@@ -125,19 +125,19 @@
 
   <!-- HUD -->
   <text x="40"  y="34" font-size="14" fill="#33ccff">SCORE</text>
-  <text x="40"  y="54" font-size="14" fill="#fff" class="blink">001621</text>
+  <text x="40"  y="54" font-size="14" fill="#fff" class="blink">001633</text>
 
   <text x="200" y="34" font-size="14" fill="#ff3333">HI-SCORE</text>
-  <text x="210" y="54" font-size="14" fill="#fff">001621</text>
+  <text x="210" y="54" font-size="14" fill="#fff">001633</text>
 
   <text x="380" y="34" font-size="14" fill="#ffcc00">STREAK</text>
   <text x="380" y="54" font-size="14" fill="#fff">000000</text>
 
   <text x="540" y="34" font-size="14" fill="#39d353">LONGEST</text>
-  <text x="555" y="54" font-size="14" fill="#fff">000121</text>
+  <text x="555" y="54" font-size="14" fill="#fff">000122</text>
 
   <text x="720" y="34" font-size="14" fill="#ff66cc">DATE</text>
-  <text x="700" y="54" font-size="14" fill="#fff">2026.08.25</text>
+  <text x="700" y="54" font-size="14" fill="#fff">2026.08.26</text>
 
   <text x="435" y="86" text-anchor="middle" font-size="22" fill="#fff" letter-spacing="6">GIT INVADERS</text>
 
@@ -278,15 +278,16 @@
   <use href="#alien" x="778" y="194" fill="#ffcc33"/>
   <use href="#alien" x="792" y="110" fill="#ff6644"/>
   <use href="#alien" x="792" y="124" fill="#ffcc33"/>
+  <use href="#alien" x="792" y="138" fill="#ff6644"/>
     <!-- explosions sit on top of the formation -->
     <g transform="translate(680,110)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="0.0s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
-  <g transform="translate(722,166)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="1.12s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
-  <g transform="translate(666,152)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="2.25s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
-  <g transform="translate(624,166)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="3.38s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
+  <g transform="translate(778,138)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="1.12s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
+  <g transform="translate(652,138)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="2.25s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
+  <g transform="translate(680,124)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="3.38s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
   <g transform="translate(666,138)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="4.5s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
-  <g transform="translate(680,124)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="5.62s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
+  <g transform="translate(638,138)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="5.62s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
   <g transform="translate(666,180)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="6.75s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
-  <g transform="translate(652,138)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="7.88s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
+  <g transform="translate(638,110)" opacity="0"><animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.10;0.18;1" dur="9.0s" begin="7.88s" repeatCount="indefinite"/><rect x="0" y="-1" width="8" height="8" fill="#ffee00"/><rect x="-2" y="1" width="2" height="2" fill="#ff6644"/><rect x="8" y="1" width="2" height="2" fill="#ff6644"/><rect x="2" y="-3" width="2" height="2" fill="#ff6644"/><rect x="2" y="7" width="2" height="2" fill="#ff6644"/></g>
   </g>
 
   <!-- Ship + laser -->
