@@ -82,6 +82,9 @@ focus:      AI / ML, Systems, Full-Stack Web
 
 <div align="center">
 
+  <a href="https://github.com/ZacharyTChung/pl-player-profiling">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=pl-player-profiling&theme=tokyonight&hide_border=true" />
+  </a>
   <a href="https://github.com/ZacharyTChung/personal-site">
     <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=personal-site&theme=tokyonight&hide_border=true" />
   </a>
@@ -96,9 +99,6 @@ focus:      AI / ML, Systems, Full-Stack Web
   </a>
   <a href="https://github.com/ZacharyTChung/travel-map">
     <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=travel-map&theme=tokyonight&hide_border=true" />
-  </a>
-  <a href="https://github.com/ZacharyTChung/AdaptiveIO_Journal">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ZacharyTChung&repo=AdaptiveIO_Journal&theme=tokyonight&hide_border=true" />
   </a>
 
 </div>
