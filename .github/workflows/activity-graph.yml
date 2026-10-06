@@ -1,0 +1,36 @@
+name: Update activity graph
+
+on:
+  schedule:
+    - cron: "3 */6 * * *"   # every 6 hours so "today" stays current
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/generate_activity_graph.py"
+      - ".github/workflows/activity-graph.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate SVG
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USERNAME: ZacharyTChung
+        run: python scripts/generate_activity_graph.py
+
+      - name: Commit if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh activity graph"
+          file_pattern: assets/activity-graph.svg

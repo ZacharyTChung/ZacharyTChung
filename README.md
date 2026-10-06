@@ -130,7 +130,7 @@ focus:      AI / ML, Systems, Full-Stack Web
 
 <div align="center">
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=ZacharyTChung&theme=tokyo-night&hide_border=true&area=true&days=30" width="98%" />
+<img src="assets/activity-graph.svg" width="98%" alt="Contribution activity over the last 30 days" />
 
 </div>
 
