@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 320" width="100%" role="img" aria-labelledby="t d">
   <title id="t">Contribution activity · last 30 days</title>
-  <desc id="d">Daily GitHub contributions for ZacharyTChung from 2026-09-21 to 2026-10-20: 98 total, peak 7 on 2026-09-21.</desc>
+  <desc id="d">Daily GitHub contributions for ZacharyTChung from 2026-09-21 to 2026-10-20: 99 total, peak 7 on 2026-09-21.</desc>
   <defs>
     <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#bf91f3" stop-opacity="0.22" />
@@ -26,7 +26,7 @@
   <rect width="880" height="320" rx="6" fill="#1a1b27" />
 
   <text class="title" x="60" y="30">Contribution activity</text>
-  <text class="sub" x="60" y="50">Sep 21 – Oct 20, 2026  ·  98 contributions  ·  peak 7 on Sep 21</text>
+  <text class="sub" x="60" y="50">Sep 21 – Oct 20, 2026  ·  99 contributions  ·  peak 7 on Sep 21</text>
 
   <g class="grid">
     <line x1="60" y1="276.0" x2="852" y2="276.0" />
@@ -48,8 +48,8 @@
     <text x="852.0" y="300" text-anchor="middle">Oct 20</text>
   </g>
 
-  <path class="area" d="M60.0 97.5 L87.31 225.0 L114.62 225.0 L141.93 250.5 L169.24 250.5 L196.55 225.0 L223.86 250.5 L251.17 250.5 L278.48 174.0 L305.79 250.5 L333.1 225.0 L360.41 174.0 L387.72 250.5 L415.03 225.0 L442.34 174.0 L469.66 174.0 L496.97 174.0 L524.28 174.0 L551.59 174.0 L578.9 174.0 L606.21 174.0 L633.52 199.5 L660.83 199.5 L688.14 148.5 L715.45 148.5 L742.76 148.5 L770.07 148.5 L797.38 148.5 L824.69 174.0 L852.0 174.0 L852.0 276.0 L60.0 276.0 Z" />
-  <path class="line" d="M60.0 97.5 L87.31 225.0 L114.62 225.0 L141.93 250.5 L169.24 250.5 L196.55 225.0 L223.86 250.5 L251.17 250.5 L278.48 174.0 L305.79 250.5 L333.1 225.0 L360.41 174.0 L387.72 250.5 L415.03 225.0 L442.34 174.0 L469.66 174.0 L496.97 174.0 L524.28 174.0 L551.59 174.0 L578.9 174.0 L606.21 174.0 L633.52 199.5 L660.83 199.5 L688.14 148.5 L715.45 148.5 L742.76 148.5 L770.07 148.5 L797.38 148.5 L824.69 174.0 L852.0 174.0" />
+  <path class="area" d="M60.0 97.5 L87.31 225.0 L114.62 225.0 L141.93 250.5 L169.24 250.5 L196.55 225.0 L223.86 250.5 L251.17 250.5 L278.48 174.0 L305.79 250.5 L333.1 225.0 L360.41 174.0 L387.72 250.5 L415.03 225.0 L442.34 174.0 L469.66 174.0 L496.97 174.0 L524.28 174.0 L551.59 174.0 L578.9 174.0 L606.21 174.0 L633.52 199.5 L660.83 199.5 L688.14 148.5 L715.45 148.5 L742.76 148.5 L770.07 148.5 L797.38 148.5 L824.69 174.0 L852.0 148.5 L852.0 276.0 L60.0 276.0 Z" />
+  <path class="line" d="M60.0 97.5 L87.31 225.0 L114.62 225.0 L141.93 250.5 L169.24 250.5 L196.55 225.0 L223.86 250.5 L251.17 250.5 L278.48 174.0 L305.79 250.5 L333.1 225.0 L360.41 174.0 L387.72 250.5 L415.03 225.0 L442.34 174.0 L469.66 174.0 L496.97 174.0 L524.28 174.0 L551.59 174.0 L578.9 174.0 L606.21 174.0 L633.52 199.5 L660.83 199.5 L688.14 148.5 L715.45 148.5 L742.76 148.5 L770.07 148.5 L797.38 148.5 L824.69 174.0 L852.0 148.5" />
   <g>
     <circle class="dot" cx="60.0" cy="97.5" r="4" />
     <circle class="dot" cx="87.31" cy="225.0" r="4" />
@@ -80,10 +80,10 @@
     <circle class="dot" cx="770.07" cy="148.5" r="4" />
     <circle class="dot" cx="797.38" cy="148.5" r="4" />
     <circle class="dot" cx="824.69" cy="174.0" r="4" />
-    <circle class="dot" cx="852.0" cy="174.0" r="4" />
+    <circle class="dot" cx="852.0" cy="148.5" r="4" />
   </g>
   <g class="label">
     <text x="60.0" y="86.5" text-anchor="middle">7</text>
-    <text x="852.0" y="163.0" text-anchor="middle">4</text>
+    <text x="852.0" y="137.5" text-anchor="middle">5</text>
   </g>
 </svg>
